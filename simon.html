@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Not-So Simple Simon</title>
+    <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
+    <link rel='stylesheet' href='css/simon.css'>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <h1 class="text-center">"Not-So" Simple Simon</h1>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <canvas class="center-block" id="canvas" width="520" height="520">
+                   <audio data-key="1" src="sounds/smb_coin.wav"></audio>
+                   <audio data-key="2" src="sounds/smb_breakblock.wav"></audio>
+                   <audio data-key="3" src="sounds/smb_jump-super.wav"></audio>
+                   <audio data-key="4" src="sounds/smb_pipe.wav"></audio>
+                   <audio data-key="5" src="sounds/smb_mariodie.wav"></audio>
+                   <audio data-key="6" src="sounds/smb_stage_clear.wav"></audio>
+                   <audio data-key="7" src="sounds/start.wav"></audio>
+                   <audio data-key="8" src="sounds/hit.wav"></audio>
+            </div>
+        </div>
+    </div>
+    <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/ocanvas/2.8.7/ocanvas.min.js"></script>
+    <script src="js/simon.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Whack A Duck!</title>
+    <link rel="stylesheet" href="css/whackaDuck.css">
+</head>
+
+<body>
+    <div class="game-info">
+        <div class="well">
+            <h2 class="title left">DUCK</h2>
+            <hr class="title-rule">
+            <h2 class="title right">HUNTER</h2>
+        </div>
+        <div class="score-panel">
+            <div class="score">0</div>
+            <div class="score-label">SCORE</div>
+        </div>
+        <button class="prstart" onClick="startGame()">Click Start!</button>
+        <button class="gameover hidden" onClick="startGame()">Play Again?</button>
+    </div>
+    <div class="game">
+        <div class="hole hole1">
+            <div class="duck"></div>
+        </div>
+        <div class="hole hole2">
+            <div class="duck"></div>
+        </div>
+        <div class="hole hole3">
+            <div class="duck"></div>
+        </div>
+        <div class="hole hole4">
+            <div class="duck"></div>
+        </div>
+        <div class="hole hole5">
+            <div class="duck"></div>
+        </div>
+        <div class="hole hole6">
+            <div class="duck"></div>
+        </div>
+    </div>
+    <audio src="sounds/gunshot.wav"></audio>
+    <script>
+        const holes = document.querySelectorAll('.hole');
+        const scoreBoard = document.querySelector('.score');
+        const ducks = document.querySelectorAll('.duck');
+        let lastHole;
+        let timeUp = false;
+        let score = 0;
+        let gameClock = 20000;
+
+        function randomTime(min, max) {
+            return Math.round(Math.random() * (max - min) + min);
+        }
+
+        function randomHole(holes) {
+            const idx = Math.floor(Math.random() * holes.length);
+            const hole = holes[idx];
+            if (hole === lastHole) {
+                console.log('Quack!');
+                return randomHole(holes);
+            }
+            lastHole = hole;
+            return hole;
+        }
+
+        function peep() {
+            const time = randomTime(200, 1200);
+            const hole = randomHole(holes);
+            hole.classList.add('up');
+            setTimeout(() => {
+                hole.classList.remove('up');
+                if (!timeUp) peep();
+            }, time);
+        }
+
+        function startGame() {
+            scoreBoard.textContent = 0;
+            timeUp = false;
+            score = 0;
+            inGame();
+            peep();
+            setTimeout(() => timeUp = true, gameClock);
+
+        }
+
+
+        function bang(e) {
+            if (!e.isTrusted) return;
+            score++;
+            this.classList.remove('up');
+            scoreBoard.textContent = score;
+            const gunshot = document.querySelector('audio');
+            if (!gunshot) return;
+            gunshot.currentTime = 0;
+            gunshot.play();
+
+        }
+
+        function inGame() {
+            const title = document.querySelector('.well');
+            const start = document.querySelector('.prstart');
+            const titleWindow = document.querySelector('.game-info');
+            const resetBtn = document.querySelector('.gameover');
+            titleWindow.classList.add('ingame');
+            start.classList.add('hidden');
+            title.classList.add('hidden');
+
+            setTimeout(function() {
+                resetBtn.classList.remove('hidden');
+            }, gameClock);
+
+        }
+
+        ducks.forEach(duck => duck.addEventListener('click', bang));
+    </script>
+</body>
+
+</html>
